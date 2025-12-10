@@ -1,0 +1,1122 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="X-Robots-Tag" content="noindex">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js" integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- topbar -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        @font-face {
+            font-family: 'WorkSans';
+            /* src: url('<?php echo base_url(); ?>assets/font_familys/sans/Work_Sans/WorkSans-Regular.ttf') format('truetype'); */
+        }
+
+        body {
+            font-family: "WorkSans", sans-serif;
+            background: #f8fafd;
+            box-sizing: border-box;
+            max-height: 100vh;
+        }
+
+        /* Topbar */
+        .topbar {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent !important;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #17a2b8;
+            /* background: <?= $color ?>; */
+            color: #fff;
+            font-weight: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+        }
+
+        /* Tooltip */
+        .tooltip-box {
+            position: absolute;
+            top: 100%;
+            /* bottom: -10px; */
+            right: 0;
+            margin-top: 8px;
+            /* transform: translateX(50%) translateY(100%); */
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s ease-in-out;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tooltip-box::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            right: 20px;
+            transform: translateX(50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent rgba(0, 0, 0, 0.85) transparent;
+        }
+
+        .tooltip-wrapper:hover .tooltip-box {
+            opacity: 1;
+        }
+
+        #avatarToggle:checked~.tooltip-box {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        #avatarToggle:checked~.dropdown-menu-custom {
+            display: flex;
+        }
+
+        .dropdown-menu-custom {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 1);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 8px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            min-width: 140px;
+            animation: fadeIn 0.2s ease-in-out;
+            box-shadow:
+                4px 4px 12px rgba(0, 0, 0, 0.2),
+                -4px -4px 12px rgba(255, 255, 255, 0.2),
+                inset 2px 2px 6px rgba(255, 255, 255, 0.2),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-item-custom {
+            padding: 10px 16px;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .dropdown-item-custom:hover {
+            background: rgba(124, 65, 245, 0.2);
+            color: #000;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow:
+                4px 4px 12px rgba(0, 0, 0, 0.2),
+                -4px -4px 12px rgba(255, 255, 255, 0.2),
+                inset 2px 2px 6px rgba(255, 255, 255, 0.2),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s ease-in-out;
+            box-shadow:
+                2px 2px 6px rgba(0, 0, 0, 0.2),
+                -2px -2px 6px rgba(255, 255, 255, 0.25),
+                inset 1px 1px 3px rgba(255, 255, 255, 0.1),
+                inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .liquid-glass:hover {
+            text-decoration: none;
+        }
+
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            border-radius: inherit;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
+            pointer-events: none;
+        }
+
+        .liquid-glass:active {
+            transform: translateY(0);
+            box-shadow:
+                4px 4px 12px rgba(0, 0, 0, 0.2),
+                -4px -4px 12px rgba(255, 255, 255, 0.2),
+                inset 2px 2px 6px rgba(255, 255, 255, 0.2),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .notif-container {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #5A9BD4;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: top 0.5s ease-out, opacity 0.5s ease-in-out;
+            z-index: 9999999;
+        }
+
+        .notif-show {
+            top: 20px;
+            opacity: 1;
+        }
+    </style>
+    <!-- jam -->
+    <style>
+        .clock {
+            font-family: 'SFMono-Regular', Menlo, Monaco, 'Roboto Mono', monospace;
+            font-size: var(--font-size);
+            line-height:1;
+            padding:6px 10px;
+            border-radius:6px;
+            /* background: rgba(0,0,0,0.06); */
+            color:#111;
+            display:inline-flex;
+            gap:8px;
+            align-items:center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            }
+
+
+            .time { font-weight:600; letter-spacing:0.6px; }
+            .sec { font-weight:400; opacity:0.85; font-size:0.9em; }
+            .ampm { font-size:0.75em; opacity:0.6; margin-left:4px; }
+
+
+            /* Optional: membuat titik dua "berkedip" tiap detik */
+            .colon { display:inline-block; width:6px; text-align:center; }
+            .colon.blink { animation: blink 1s steps(1,start) infinite; }
+            @keyframes blink { 50% { opacity:0; } }
+    </style>
+    <!-- styling checkbox -->
+    <style>
+        .cyber-checkbox {
+            --checkbox-size: 24px;
+            --checkbox-color: #5c67ff;
+            --checkbox-check-color: #ffffff;
+            --checkbox-hover-color: #4c57ef;
+            --checkbox-spark-offset: -20px;
+
+            position: relative;
+            /* display: inline-block; */
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            gap: 5px;
+        }
+
+        .cyber-checkbox input {
+            display: none;
+        }
+
+        .cyber-checkbox__mark {
+            position: relative;
+            display: inline-block;
+            width: var(--checkbox-size);
+            height: var(--checkbox-size);
+        }
+
+        .cyber-checkbox__box {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--checkbox-color);
+            border-radius: 4px;
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .cyber-checkbox__check {
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            stroke: var(--checkbox-check-color);
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            transform: scale(0);
+            transition: transform 0.2s ease;
+        }
+
+        .cyber-checkbox__effects {
+            position: absolute;
+            inset: var(--checkbox-spark-offset);
+            pointer-events: none;
+        }
+
+        .cyber-checkbox__spark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 2px;
+            background: var(--checkbox-color);
+            border-radius: 50%;
+            opacity: 0;
+            transform-origin: center center;
+        }
+
+        /* Hover */
+        .cyber-checkbox:hover .cyber-checkbox__box {
+            border-color: var(--checkbox-hover-color);
+            box-shadow: 0 0 0 2px rgba(92, 103, 255, 0.1);
+        }
+
+        /* Checked */
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .cyber-checkbox__box {
+            background: var(--checkbox-color);
+            border-color: var(--checkbox-color);
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .cyber-checkbox__check {
+            transform: scale(1);
+        }
+
+        /* Spark Animation */
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .cyber-checkbox__spark {
+            animation: spark 0.4s ease-out;
+        }
+
+        .cyber-checkbox__spark:nth-child(1) {
+            transform: rotate(0deg) translateX(var(--checkbox-spark-offset));
+        }
+
+        .cyber-checkbox__spark:nth-child(2) {
+            transform: rotate(90deg) translateX(var(--checkbox-spark-offset));
+        }
+
+        .cyber-checkbox__spark:nth-child(3) {
+            transform: rotate(180deg) translateX(var(--checkbox-spark-offset));
+        }
+
+        .cyber-checkbox__spark:nth-child(4) {
+            transform: rotate(270deg) translateX(var(--checkbox-spark-offset));
+        }
+
+        @keyframes spark {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg) translateX(var(--checkbox-spark-offset));
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1) rotate(0deg) translateX(calc(var(--checkbox-spark-offset) * 1.5));
+            }
+        }
+
+        /* Active */
+        .cyber-checkbox:active .cyber-checkbox__box {
+            transform: scale(0.9);
+        }
+
+        /* Focus */
+        .cyber-checkbox input:focus+.cyber-checkbox__mark .cyber-checkbox__box {
+            box-shadow: 0 0 0 4px rgba(92, 103, 255, 0.2);
+        }
+
+        .cyber-checkbox__particles {
+            position: absolute;
+            inset: -50%;
+            pointer-events: none;
+        }
+
+        .cyber-checkbox__particles div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--checkbox-color);
+            opacity: 0;
+        }
+
+        /* Particle animations for check */
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-1 {
+            animation: particle-1 0.4s ease-out forwards;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-2 {
+            animation: particle-2 0.4s ease-out forwards 0.1s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-3 {
+            animation: particle-3 0.4s ease-out forwards 0.15s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-4 {
+            animation: particle-4 0.4s ease-out forwards 0.05s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-5 {
+            animation: particle-5 0.4s ease-out forwards 0.12s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-6 {
+            animation: particle-6 0.4s ease-out forwards 0.08s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-7 {
+            animation: particle-7 0.4s ease-out forwards 0.18s;
+        }
+
+        .cyber-checkbox input:checked+.cyber-checkbox__mark .particle-8 {
+            animation: particle-8 0.4s ease-out forwards 0.15s;
+        }
+
+        /* Particle animations for uncheck */
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-1 {
+            animation: particle-out-1 0.4s ease-out forwards;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-2 {
+            animation: particle-out-2 0.4s ease-out forwards 0.1s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-3 {
+            animation: particle-out-3 0.4s ease-out forwards 0.15s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-4 {
+            animation: particle-out-4 0.4s ease-out forwards 0.05s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-5 {
+            animation: particle-out-5 0.4s ease-out forwards 0.12s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-6 {
+            animation: particle-out-6 0.4s ease-out forwards 0.08s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-7 {
+            animation: particle-out-7 0.4s ease-out forwards 0.18s;
+        }
+
+        .cyber-checkbox input:not(:checked)+.cyber-checkbox__mark .particle-8 {
+            animation: particle-out-8 0.4s ease-out forwards 0.15s;
+        }
+
+        /* Particle keyframes for check */
+        @keyframes particle-1 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-20px, -20px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-2 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(20px, -20px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-3 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(20px, 20px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-4 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-20px, 20px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-5 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-30px, 0px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-6 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(30px, 0px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-7 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0px, -30px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-8 {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0px, 30px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Particle keyframes for uncheck */
+        @keyframes particle-out-1 {
+            0% {
+                transform: translate(-20px, -20px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-2 {
+            0% {
+                transform: translate(20px, -20px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-3 {
+            0% {
+                transform: translate(20px, 20px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-4 {
+            0% {
+                transform: translate(-20px, 20px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-5 {
+            0% {
+                transform: translate(-30px, 0px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-6 {
+            0% {
+                transform: translate(30px, 0px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-7 {
+            0% {
+                transform: translate(0px, -30px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-out-8 {
+            0% {
+                transform: translate(0px, 30px) scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+    <!-- scrollbar -->
+    <style>
+        .my-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .my-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.31);
+            border-radius: 10px;
+        }
+
+        .my-scroll::-webkit-scrollbar-thumb {
+            background: #7c41f5;
+            border-radius: 10px;
+            backdrop-filter: blur(4px);
+        }
+
+        .my-scroll::-webkit-scrollbar-thumb:hover {
+            background: #7c41f5;
+        }
+    </style>
+    <!-- loading -->
+    <style>
+        /* From Uiverse.io by Nawsome */ 
+        .triangles {
+        transform: translate(-50%, -50%);
+        height: 81px;
+        width: 90px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 99999999;
+        }
+
+        .tri {
+        position: absolute;
+        animation: pulse_51 750ms ease-in infinite;
+        border-top: 27px solid #215A6D;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 0px;
+        }
+
+        .tri.invert {
+        border-top: 0px;
+        border-bottom: 27px solid #215A6D;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        }
+
+        .tri:nth-child(1) {
+        left: 30px;
+        }
+
+        .tri:nth-child(2) {
+        left: 15px;
+        top: 27px;
+        animation-delay: -125ms;
+        }
+
+        .tri:nth-child(3) {
+        left: 30px;
+        top: 27px;
+        }
+
+        .tri:nth-child(4) {
+        left: 45px;
+        top: 27px;
+        animation-delay: -625ms;
+        }
+
+        .tri:nth-child(5) {
+        top: 54px;
+        animation-delay: -250ms;
+        }
+
+        .tri:nth-child(6) {
+        top: 54px;
+        left: 15px;
+        animation-delay: -250ms;
+        }
+
+        .tri:nth-child(7) {
+        top: 54px;
+        left: 30px;
+        animation-delay: -375ms;
+        }
+
+        .tri:nth-child(8) {
+        top: 54px;
+        left: 45px;
+        animation-delay: -500ms;
+        }
+
+        .tri:nth-child(9) {
+        top: 54px;
+        left: 60px;
+        animation-delay: -500ms;
+        }
+
+        @keyframes pulse_51 {
+        0% {
+            opacity: 1;
+        }
+
+        16.666% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- loading -->
+    <div class="triangles">
+        <div class="tri invert"></div>
+        <div class="tri invert"></div>
+        <div class="tri"></div>
+        <div class="tri invert"></div>
+        <div class="tri invert"></div>
+        <div class="tri"></div>
+        <div class="tri invert"></div>
+        <div class="tri"></div>
+        <div class="tri invert"></div>
+    </div>
+    <!-- NOTIF -->
+    <div id="notif" class="notif-container"></div>
+    <!-- topbar -->
+    <div class="topbar">
+        <!-- Go To Home -->
+        <div></div>
+        <!-- PURE CSS DROPDOWN + TOOLTIP -->
+        <label class="tooltip-wrapper">
+            <input type="checkbox" id="avatarToggle" hidden>
+            <!-- Avatar -->
+            <div class="tooltip-target user-avatar">
+                <!-- <?= $initial ?> -->
+                E
+            </div>
+            <!-- Tooltip -->
+            <div class="tooltip-box">
+                Maruniku Account
+                <small><?= $nama ?> - <?= $divisi ?></small>
+                <small><?= $nik ?></small>
+            </div>
+            <!-- Dropdown -->
+            <div id="avatarDropdown" class="dropdown-menu-custom">
+                <a href="#" class="dropdown-item-custom"><i class="fa fa-user"></i> Profile</a>
+                <a href="#" class="dropdown-item-custom"><i class="fa fa-sign-out"></i> Logout</a>
+            </div>
+        </label>
+    </div>
+    <!-- content -->
+    <div class="container-fluid px-4">
+        <div class="card card-body shadow-sm px-3 pt-0 pb-3 border-0 position-relative my-scroll" style="border-radius: 15px; overflow-y: auto; max-height: 89vh;">
+            <!-- HEADER TITLE -->
+            <div class="row align-items-center sticky-top bg-white py-3">
+                <div class="col-12 col-md-6">
+                    <div class="d-flex align-items-end" style="gap: 8px;">
+                        <div class="badge p-2 rounded shadow liquid-glass" style="background: #7c41f5; color: #EEEEEE;">
+                            <svg class="tachometer" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="white" d="M12 4C6.486 4 2 8.486 2 14a9.89 9.89 0 0 0 1.051 4.445c.17.34.516.555.895.555h16.107c.379 0 .726-.215.896-.555A9.89 9.89 0 0 0 22 14c0-5.514-4.486-10-10-10zm7.41 13H4.59A7.875 7.875 0 0 1 4 14c0-4.411 3.589-8 8-8s8 3.589 8 8a7.875 7.875 0 0 1-.59 3z" />
+                                <path class="hand" fill="white" d="M10.939 12.939a1.53 1.53 0 0 0 0 2.561 1.53 1.53 0 0 0 2.121-.44l3.962-6.038a.034.034 0 0 0 0-.035.033.033 0 0 0-.045-.01l-6.038 3.962z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="clock" id="clock" aria-live="polite">
+                                <div class="time" id="hhmm">--:--</div>
+                                <div class="colon blink">:</div>
+                                <div class="sec" id="ss">--</div>
+                                <div class="ampm" id="ampm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <!--  -->
+                </div>
+            </div>
+
+            <!-- ALL -->
+            <div class="card rounded shadow-sm mt-3">
+                <div class="card-header d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#collapseAll" style="cursor: pointer;" title="Lihat/sembunyikan data" onclick="toggleCollapse(this)">
+                    Performa Customer All
+                    <div class="badge rounded px-2 py-2 border-0 liquid-glass" style="background: #0000004d !important;">
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="card-body collapse show position-relative" id="collapseAll">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center p-1 border rounded" style="gap: 10px;">
+                            <!-- cutsize -->
+                            <label class="cyber-checkbox mb-0">
+                                <input type="checkbox" checked onchange="toggleSeriesCustomer('cutsize', this.checked)" />
+                                <span class="cyber-checkbox__mark">
+                                    <div class="cyber-checkbox__box">
+                                        <svg class="cyber-checkbox__check" viewBox="0 0 12 10">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="cyber-checkbox__effects">
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                    </div>
+                                    <div class="cyber-checkbox__particles">
+                                        <div class="particle-1"></div>
+                                        <div class="particle-2"></div>
+                                        <div class="particle-3"></div>
+                                        <div class="particle-4"></div>
+                                        <div class="particle-5"></div>
+                                        <div class="particle-6"></div>
+                                        <div class="particle-7"></div>
+                                        <div class="particle-8"></div>
+                                    </div>
+                                </span>
+                                <span style="color: #EA168E;">Cutsize</span>
+                            </label>
+                            <!-- non cutsize -->
+                            <label class="cyber-checkbox mb-0">
+                                <input type="checkbox" checked onchange="toggleSeriesCustomer('noncutsize', this.checked)" />
+                                <span class="cyber-checkbox__mark">
+                                    <div class="cyber-checkbox__box">
+                                        <svg class="cyber-checkbox__check" viewBox="0 0 12 10">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="cyber-checkbox__effects">
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                        <div class="cyber-checkbox__spark"></div>
+                                    </div>
+                                    <div class="cyber-checkbox__particles">
+                                        <div class="particle-1"></div>
+                                        <div class="particle-2"></div>
+                                        <div class="particle-3"></div>
+                                        <div class="particle-4"></div>
+                                        <div class="particle-5"></div>
+                                        <div class="particle-6"></div>
+                                        <div class="particle-7"></div>
+                                        <div class="particle-8"></div>
+                                    </div>
+                                </span>
+                                <span style="color: #1ABB9C;">Non Cutsize</span>
+                            </label>
+                            <!-- show row data -->
+                            <div class="checkbox-wrapper-10">
+                                <input checked="" type="checkbox" id="all" class="tgl tgl-flip" onchange="toggleRowData(this)">
+                                <label for="all" data-tg-on="Rowdata" data-tg-off="Hide" class="tgl-btn mb-0"></label>
+                            </div>
+                            <!-- row data -->
+                            <div class="d-flex align-items-center" style="gap: 5px;">
+                                <small class="font-weight-bold">Rowdata:</small>
+                                <input type="range" min="1" max="50" value="50" class="form-control form-control-sm mb-0" oninput="changeRowDataAll(this)">
+                                <small><b id="rowdataCountAll" contenteditable="true" oninput="changeRowDataPerformaCustAll(this)">50</b></small>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Row data All -->
+                        <div>
+                            <div class="checkbox-wrapper-10">
+                                <input checked="" type="checkbox" id="row_all" class="tgl tgl-flip" onchange="toggleRowDataAll(this)">
+                                <label for="row_all" data-tg-on="All Data" data-tg-off="Hide" class="tgl-btn mb-0"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="loadingChartAll position-absolute" style="z-index:999; width: 97%;"></div>
+                    <div id="performa_customer_all"></div>
+                    <div id="row_data_all" class="p-2 rounded border d-none">
+                        <!-- row data -->
+                    </div>
+
+                    <div id="row_data_allno_trigger" class="p-2 rounded border d-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isAdminIT;
+        let roleExport;
+        var getUrl = window.location;
+        var url =
+            getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split("/")[1];
+
+        const myColors = ['#7B45E9', '#6BB5CB', '#EBAA56', '#F7E5C3'];
+
+        var greetings = [
+            "Selamat bekerja, tetap jaga kesehatan dan semangat.",
+            "Semoga hari ini membawa hasil terbaik untuk Anda.",
+            "Selamat beraktivitas.",
+            "Semoga harimu penuh kemudahan dan keberhasilan.",
+            "Tetap semangat, semoga setiap langkahmu diberi kelancaran.",
+            "Semoga hari ini lebih baik dari hari kemarin.",
+            "Selamat menjalani hari, semoga penuh inspirasi.",
+        ];
+
+        function getRandomGreeting() {
+            let randomIndex = Math.floor(Math.random() * greetings.length);
+            return greetings[randomIndex];
+        }
+
+        function showNotificationDashboard(message) {
+            let notif = document.getElementById('notif');
+            let bgColor = '#7B45E9';
+
+            notif.style.background = bgColor;
+            notif.textContent = message;
+            notif.classList.add('notif-show');
+
+            setTimeout(() => {
+                notif.classList.remove('notif-show');
+            }, 3000);
+        }
+
+        let ajaxAll = null;
+        let chartAll;
+        let cardcodePerformaAll
+        var allData = [];
+        let allRowData = [];
+        let dataChartMonth = {};
+        let dataTableMonth = {};
+        let cardcodePerformaMonth = {};
+        $(document).ready(function() {
+            let namaUser = "<?= $this->session->userdata('nama') ?>"; // Ambil nama user dari session
+            let greetingMessage = `Hi, ${namaUser}! ${getRandomGreeting()}`;
+            showNotificationDashboard(greetingMessage);
+        })
+
+        document.addEventListener('click', function(e) {
+            const wrapper = document.querySelector('.tooltip-wrapper');
+            const toggle = document.getElementById('avatarToggle');
+
+            // kalau klik di luar wrapper AND dropdown lagi kebuka
+            if (!wrapper.contains(e.target) && toggle.checked) {
+                toggle.checked = false;
+            }
+        });
+    </script>
+    <script>
+        
+    // Kecil, simpel, ticking seconds.
+    // Ubah opsi di sini jika mau 24-hour atau 12-hour
+    const use24Hour = false; // set true untuk format 24 jam
+
+    const hhmmEl = document.getElementById('hhmm');
+    const ssEl = document.getElementById('ss');
+    const ampmEl = document.getElementById('ampm');
+    const colonEl = document.querySelector('.colon');
+
+    function pad(n){ return n.toString().padStart(2,'0'); }
+
+    function updateClock(){
+      const now = new Date();
+      let h = now.getHours();
+      const m = now.getMinutes();
+      const s = now.getSeconds();
+
+      let ampm = '';
+      if(!use24Hour){
+        ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12; if(h === 0) h = 12;
+      }
+
+      hhmmEl.textContent = pad(h) + ':' + pad(m);
+      ssEl.textContent = pad(s);
+      ampmEl.textContent = ampm;
+
+      // pastikan colon berkedip sinkron dengan detik (jalankan ulang animasi)
+      colonEl.classList.remove('blink');
+      // force reflow untuk restart animation
+      void colonEl.offsetWidth;
+      colonEl.classList.add('blink');
+    }
+
+    // Update segera dan lalu setiap 1 detik.
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // OPTIONAL: contoh mengubah ukuran (kalau mau lebih kecil/lebih besar)
+    // document.querySelector('.clock').style.setProperty('--font-size', '10px');
+    </script>
+</body>
+
+</html>
